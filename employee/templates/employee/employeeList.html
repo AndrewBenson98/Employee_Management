@@ -1,0 +1,29 @@
+{% extends 'employee/base.html' %}
+
+{% block content %}
+<h2>Employee Overview</h2>
+<table class="table table-dark">
+    <tr class="tableRow">
+        <th class="tableHeader">Employee ID</th>
+        <th class="tableHeader">Name</th>
+        <th class="tableHeader">Title</th>
+        <th class="tableHeader">Email</th>
+        <th class="tableHeader">Salary</th>
+        <th class="tableHeader">Manager</th>
+
+        <th class="tableHeader">Department</th>
+    </tr>
+
+    {% for emp in employees %}
+    <tr class="tableRow">
+        <td><a href="{% url 'emp_profile' pk=emp.empID %}">{{ emp.empID }}</a></td>
+        <td>{{ emp.fName }} {{ emp.lName }}</td>
+        <td>{{ emp.title }}</td>
+        <td>{{ emp.email }}</td>
+        <td>${{ emp.salary }}</td>
+        <td>{{ emp.manager }}</td>
+        <td>{{ emp.deptID }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

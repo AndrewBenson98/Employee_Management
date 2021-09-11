@@ -1,0 +1,24 @@
+{% extends 'employee/base.html' %}
+
+{% block content %}
+
+
+<h2>{{ emp.fName }} {{ emp.lName }}</h2>
+{% if user.is_superuser %}
+<aside class="actions">
+    <a class="btn btn-default" href="{% url 'emp_edit' pk=emp.empID %}">
+        {% include './icons/pencil-fill.svg' %}
+    </a>
+    <a class="btn btn-default" href="{% url 'emp_remove' pk=emp.empID %}">
+        {% include './icons/x.svg' %}
+    </a>
+</aside>
+{% endif %}
+<h4 class="emp_info">Title: {{ emp.title }}</h4>
+<h4 class="emp_info">Email: {{ emp.email }}</h4>
+<h4 class="emp_info">Salary: ${{ emp.salary }}</h4>
+<h4 class="emp_info">Manager: {{ emp.manager }}</h4>
+<h4 class="emp_info">Department: {{ emp.deptID }}</h4>
+<h4 class="emp_info">Employee ID: {{ emp.empID }}</h4>
+
+{% endblock %}
