@@ -14,11 +14,19 @@
     </a>
 </aside>
 {% endif %}
+
+
 <h4 class="emp_info">Title: {{ emp.title }}</h4>
 <h4 class="emp_info">Email: {{ emp.email }}</h4>
-<h4 class="emp_info">Salary: ${{ emp.salary }}</h4>
-<h4 class="emp_info">Manager: {{ emp.manager }}</h4>
+<h4 class="emp_info">Reports To: {{ emp.manager }}</h4>
 <h4 class="emp_info">Department: {{ emp.deptID }}</h4>
+
+
+<!-- Only display if admin or user -->
+{% if user.is_superuser or user.username == emp.username %}
+<h4 class="emp_info">Username: {{ emp.username }}</h4>
+<h4 class="emp_info">Salary: ${{ emp.salary }}</h4>
 <h4 class="emp_info">Employee ID: {{ emp.empID }}</h4>
+{% endif %}
 
 {% endblock %}
