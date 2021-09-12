@@ -13,4 +13,7 @@ urlpatterns = [
     path('profile/', views.user_profile, name='user_profile'),
     path('leave/request', views.leave_request, name='leave_request'),
     path('leave/list', views.leave_list, name='leave_list'),
+    path('leave/detail/<int:pk>', views.leave_detail, name='leave_detail'),
+    path('leave/detail/<int:pk>/approve', views.leave_approve, name='leave_approve'),
+    path('leave/detail/<int:pk>/reject', views.leave_reject, name='leave_reject'),
 ]

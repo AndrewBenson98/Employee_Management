@@ -12,6 +12,7 @@
 
 <table class="table table-dark">
     <tr class="tableRow">
+        <th class="tableHeader">Request ID</th>
         <th class="tableHeader">Employee ID</th>
         <th class="tableHeader">Name</th>
         <th class="tableHeader">Start Date</th>
@@ -21,6 +22,7 @@
 
     {% for leave_request in leave_requests %}
     <tr class="tableRow">
+        <td><a href="{% url 'leave_detail' pk=leave_request.pk %}">{{ leave_request.pk }}</a></td>
         <td>{{ leave_request.employee.empID }}</td>
         <td>{{leave_request.employee}}</td>
         <td>{{ leave_request.start_date }}</td>

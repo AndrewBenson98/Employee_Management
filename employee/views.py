@@ -114,9 +114,11 @@ def leave_request(request):
                 leave_request = form.save(commit=False)
                 emp = get_object_or_404(Employee, username=request.user.username)
                 leave_request.employee = emp
+                leave_request.status = 'Pending'
                 leave_request.save()
                 
-                #TO DO: Make a screen to approve or decline time off
+                
+                #TO DO: Make a screen to approve or decline time off :DONE
                 #Send email tom employee's manager with link to the approval screen
                 
                 return redirect('leave_list')
@@ -127,3 +129,23 @@ def leave_request(request):
 def leave_list(request):
     leave_requests =  Leave_Request.objects.all()
     return render(request,'employee/leave_list.html',{'leave_requests':leave_requests})
+
+
+def leave_detail(request, pk):
+    leave_request = get_object_or_404(Leave_Request, pk=pk)
+    return render(request, 'employee/leave_detail.html', {'leave_request':leave_request})
+
+def leave_approve(request, pk):
+    leave_request = get_object_or_404(Leave_Request, pk=pk)
+    leave_request.status = 'Approved'
+    leave_request.save()
+    messages.success(request, "Time off has been Approved")
+    return redirect('leave_detail', pk=pk)
+
+
+def leave_reject(request, pk):
+    leave_request = get_object_or_404(Leave_Request, pk=pk)
+    leave_request.status = 'Rejected'
+    leave_request.save()
+    messages.success(request, "Time off has been Rejected")
+    return redirect('leave_detail', pk=pk)

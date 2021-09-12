@@ -52,7 +52,7 @@ class Leave_Request(models.Model):
     STATUS_CHOICES = [
         ('Pending', 'Pending'),
         ('Approved','Approved'),
-        ('Declined', 'Declined'),        
+        ('Rejected', 'Rejected'),        
     ]
     
     employee = models.ForeignKey(Employee, on_delete=CASCADE)

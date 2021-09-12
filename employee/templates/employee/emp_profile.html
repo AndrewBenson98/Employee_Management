@@ -28,12 +28,14 @@
 <h4 class="emp_info">Username: {{ emp.username }}</h4>
 <h4 class="emp_info">Salary: ${{ emp.salary }}</h4>
 <h4 class="emp_info">Employee ID: {{ emp.empID }}</h4>
-{% endif %}
-
-
 <a class="profile-link" href="{% url 'leave_request' %}" data-toggle="tooltip" title="Request Days off">
     Leave Request
 </a>
+{% endif %}
+
+
+
+
 
 
 {% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'employee/base.html' %}
+
+{% block content %}
+<h2>Leave Request #{{ leave_request.pk }}</h2>
+
+<h4 class="emp_info">Employee ID: {{ leave_request.employee.empID }}</h4>
+<h4 class="emp_info">Name: {{ leave_request.employee}}</h4>
+<h4 class="emp_info">Start Date: {{ leave_request.start_date }}</h4>
+<h4 class="emp_info">End Date: {{ leave_request.end_date }}</h4>
+<h4 class="emp_info">Status: {{ leave_request.status }}</h4>
+
+
+{% if leave_request.employee.manager.username == user.username or user.is_superuser %}
+
+<a class="btn btn-default" href="{% url 'leave_approve' pk=leave_request.pk %}" data-toggle="tooltip"
+    title="Approve Time Off">
+    Approve
+</a>
+
+<a class="btn btn-default" href="{% url 'leave_reject' pk=leave_request.pk %}" data-toggle="tooltip"
+    title="Reject Time Off">
+    Reject
+</a>
+
+{% endif %}
+
+{% endblock %}
