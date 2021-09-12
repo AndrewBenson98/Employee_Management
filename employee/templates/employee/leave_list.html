@@ -1,0 +1,34 @@
+{% extends 'employee/base.html' %}
+
+{% block content %}
+
+
+
+
+
+<div class="page_title">
+    <h2>Leave Overview</h2>
+</div>
+
+<table class="table table-dark">
+    <tr class="tableRow">
+        <th class="tableHeader">Employee ID</th>
+        <th class="tableHeader">Name</th>
+        <th class="tableHeader">Start Date</th>
+        <th class="tableHeader">End Date</th>
+        <th class="tableHeader">Status</th>
+    </tr>
+
+    {% for leave_request in leave_requests %}
+    <tr class="tableRow">
+        <td>{{ leave_request.employee.empID }}</td>
+        <td>{{leave_request.employee}}</td>
+        <td>{{ leave_request.start_date }}</td>
+        <td>{{ leave_request.end_date }}</td>
+        <td>{{ leave_request.status }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+{% endblock %}

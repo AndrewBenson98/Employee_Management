@@ -1,14 +1,30 @@
 {% extends 'employee/base.html' %}
 
 {% block content %}
-<h2>Employee Overview</h2>
-{% if user.is_superuser %}
-<aside class="actions">
-    <a href="{% url 'emp_new' %}" class="top-menu">
-        {% include './icons/file-earmark-plus.svg' %}
-    </a>
-</aside>
-{% endif %}
+
+
+
+<div class="page_header">
+
+    <div class="page_title">
+        <h2>Employee Overview</h2>
+    </div>
+
+    <div class="page_icons">
+        {% if user.is_superuser %}
+        <aside class="actions">
+
+            <a href="{% url 'emp_new' %}" class="top-menu " data-toggle="tooltip" title="Add new employee">
+                {% include './icons/file-earmark-plus.svg' %}
+            </a>
+
+        </aside>
+        {% endif %}
+    </div>
+
+</div>
+
+
 <table class="table table-dark">
     <tr class="tableRow">
         <th class="tableHeader">Employee ID</th>
@@ -33,4 +49,6 @@
     </tr>
     {% endfor %}
 </table>
+
+
 {% endblock %}

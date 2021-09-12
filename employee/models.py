@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
 from django.db.models.fields import CharField, EmailField
+from django.http import request
 from employee.utils import create_new_ref_number, generateTempPassword
 from django.contrib.auth.models import User
 # Create your models here.
@@ -47,3 +48,19 @@ class Employee(models.Model):
     
 
 
+class Leave_Request(models.Model):
+    STATUS_CHOICES = [
+        ('Pending', 'Pending'),
+        ('Approved','Approved'),
+        ('Declined', 'Declined'),        
+    ]
+    
+    employee = models.ForeignKey(Employee, on_delete=CASCADE)
+    start_date =  models.DateField("Start Date",auto_now_add=False, null=True, blank=True)
+    end_date =  models.DateField("End Date",auto_now_add=False, null=True, blank=True)
+    status = models.CharField("Status", max_length=25, choices=STATUS_CHOICES, default='Pending') 
+    
+    
+    
+    def __str__(self):
+        return f"{self.employee} {self.status}"

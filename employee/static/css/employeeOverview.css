@@ -32,15 +32,15 @@ h4 {
 .top-menu:hover,
 .top-menu:visited {
     color: #ffffff;
-    float: right;
     font-size: 26pt;
-    margin-right: 20px;
+    margin-left: 20px;
 }
 .btn-default,
 .btn-default:visited {
     color: #ffffff;
     background: none;
     border-color: #ffffff;
+
 }
 
 .btn-default:hover {
@@ -55,3 +55,16 @@ h4 {
     margin-right: 20px;
     margin-top:18px;
 }
+
+.profile-link{
+    float:left;
+    color: #ffffff;
+    font-size: 15pt;
+    margin-right: 20px;
+    margin-top:18px;
+}
+
+.page_header{
+    display: flex;
+}
+

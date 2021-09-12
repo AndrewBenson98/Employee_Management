@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Employee
+from .models import Employee, Leave_Request
 from django.contrib.auth.models import User 
-from .forms import EmpForm
+from .forms import EmpForm, Leave_Request_Form
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout 
@@ -105,3 +105,25 @@ def logout_request(request):
     #user= request.user
     logout(request)
     return redirect('login_request')
+
+
+def leave_request(request):
+    if request.method == "POST":
+            form = Leave_Request_Form(request.POST)
+            if form.is_valid():
+                leave_request = form.save(commit=False)
+                emp = get_object_or_404(Employee, username=request.user.username)
+                leave_request.employee = emp
+                leave_request.save()
+                
+                #TO DO: Make a screen to approve or decline time off
+                #Send email tom employee's manager with link to the approval screen
+                
+                return redirect('leave_list')
+    else:
+        form = Leave_Request_Form()
+    return render(request, 'employee/leave_request.html', {'form': form})
+
+def leave_list(request):
+    leave_requests =  Leave_Request.objects.all()
+    return render(request,'employee/leave_list.html',{'leave_requests':leave_requests})

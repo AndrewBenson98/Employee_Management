@@ -6,10 +6,11 @@
 <h2>{{ emp.fName }} {{ emp.lName }}</h2>
 {% if user.is_superuser %}
 <aside class="actions">
-    <a class="btn btn-default" href="{% url 'emp_edit' pk=emp.empID %}">
+    <a class="btn btn-default" href="{% url 'emp_edit' pk=emp.empID %}" data-toggle="tooltip" title="Edit Employee">
         {% include './icons/pencil-fill.svg' %}
     </a>
-    <a class="btn btn-default" href="{% url 'emp_remove' pk=emp.empID %}">
+    <a class="btn btn-default" href="{% url 'emp_remove' pk=emp.empID %} " data-toggle="tooltip"
+        title="Delete Employee">
         {% include './icons/x.svg' %}
     </a>
 </aside>
@@ -28,5 +29,11 @@
 <h4 class="emp_info">Salary: ${{ emp.salary }}</h4>
 <h4 class="emp_info">Employee ID: {{ emp.empID }}</h4>
 {% endif %}
+
+
+<a class="profile-link" href="{% url 'leave_request' %}" data-toggle="tooltip" title="Request Days off">
+    Leave Request
+</a>
+
 
 {% endblock %}
