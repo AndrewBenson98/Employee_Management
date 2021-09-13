@@ -1,10 +1,10 @@
 {% extends 'employee/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<h2>Edit Employee Details</h2>
+<h2>Edit Profile</h2>
 
-{% if user.is_superuser %}
-<form method="POST" class="post-form">{% csrf_token %}
+{% if user.is_superuser or user.username == emp.username %}
+<form method="POST" enctype="multipart/form-data" class="post-form">{% csrf_token %}
     {{ form|crispy }}
     <button type="submit" class="save btn btn-default">Save</button>
 </form>

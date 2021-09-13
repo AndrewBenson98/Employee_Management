@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
-from django.db.models.fields import CharField, EmailField
+from django.db.models.fields import CharField, EmailField, NullBooleanField
 from django.http import request
 from employee.utils import create_new_ref_number, generateTempPassword
 from django.contrib.auth.models import User
@@ -27,6 +27,7 @@ class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=CASCADE, null=True, blank=True, unique=True)
     username = models.CharField("username",max_length=50, null=True, blank=True) 
     description = models.TextField(max_length=255, null=True, blank=True)
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     
     
     def save(self, *args, **kwargs):
@@ -56,8 +57,8 @@ class Leave_Request(models.Model):
     ]
     
     employee = models.ForeignKey(Employee, on_delete=CASCADE)
-    start_date =  models.DateField("Start Date",auto_now_add=False, null=True, blank=True)
-    end_date =  models.DateField("End Date",auto_now_add=False, null=True, blank=True)
+    start_date =  models.DateField("Start Date",auto_now_add=False, null=True )
+    end_date =  models.DateField("End Date",auto_now_add=False, null=True)
     status = models.CharField("Status", max_length=25, choices=STATUS_CHOICES, default='Pending') 
     
     

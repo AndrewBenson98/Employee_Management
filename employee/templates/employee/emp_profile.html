@@ -3,7 +3,17 @@
 {% block content %}
 
 
-<h2>{{ emp.fName }} {{ emp.lName }}</h2>
+<div class="d-flex">
+    <div>
+        <img src={{ emp.image.url }} alt="" class="rounded-circle account-img">
+    </div>
+    <div>
+        <h2>{{ emp.fName }} {{ emp.lName }}</h2>
+        <h4>{{ emp.title }}</h4>
+    </div>
+</div>
+
+
 {% if user.is_superuser %}
 <aside class="actions">
     <a class="btn btn-default" href="{% url 'emp_edit' pk=emp.empID %}" data-toggle="tooltip" title="Edit Employee">
@@ -16,8 +26,15 @@
 </aside>
 {% endif %}
 
+{% if user.is_superuser or user.username == emp.username %}
+<a class="btn btn-default" href="{% url 'profile_edit' pk=emp.empID %} " data-toggle="tooltip" title="Edit Profile">
+    Edit Profile
+</a>
 
-<h4 class="emp_info">Title: {{ emp.title }}</h4>
+{% endif %}
+
+
+
 <h4 class="emp_info">Email: {{ emp.email }}</h4>
 <h4 class="emp_info">Reports To: {{ emp.manager }}</h4>
 <h4 class="emp_info">Department: {{ emp.deptID }}</h4>
@@ -33,8 +50,15 @@
 </a>
 {% endif %}
 
+<br>
+<br>
+<br>
+<br>
 
-
+{% if not emp.description == None %}
+<h4 class="emp_info">About Me...</h4>
+<pre class="description">{{ emp.description }}</pre>
+{% endif %}
 
 
 

@@ -1,22 +1,24 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Employee, Leave_Request
 from django.contrib.auth.models import User 
-from .forms import EmpForm, Leave_Request_Form
+from .forms import EmpForm, Leave_Request_Form, Update_Profile_Form
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout 
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
 def landing_page(request):
     return render(request,'employee/landing.html',{})
 
+@login_required
 def employee_list(request):
     
     employees =  Employee.objects.all()
     return render(request,'employee/employee_list.html',{'employees':employees})
 
-
+@login_required
 def emp_new(request):
     if request.method == "POST":
         form = EmpForm(request.POST)
@@ -29,6 +31,7 @@ def emp_new(request):
         form = EmpForm()
     return render(request, 'employee/emp_edit.html', {'form': form})
 
+@login_required
 def emp_edit(request, pk):
     emp = get_object_or_404(Employee, pk=pk)
     
@@ -43,6 +46,24 @@ def emp_edit(request, pk):
     return render(request, 'employee/emp_edit.html', {'form': form})
 
 
+@login_required
+def profile_edit(request, pk):
+    emp = get_object_or_404(Employee, pk=pk)
+    
+    if request.method == "POST":
+        form = Update_Profile_Form(request.POST, request.FILES, instance=emp)
+        if form.is_valid():
+            emp = form.save(commit=False)
+            emp.save()
+            messages.success(request, 'Your profile has been updated')
+            return redirect('emp_profile', pk)
+    else:
+        form = Update_Profile_Form(instance=emp)
+    return render(request, 'employee/profile_edit.html', {'form': form, 'emp':emp})
+
+
+
+
 def user_profile(request):
     
     emp = get_object_or_404(Employee, username=request.user.username)
@@ -51,6 +72,7 @@ def user_profile(request):
     return redirect('emp_profile', emp.empID)
     #return render(request,'employee/test.html',{})
 
+@login_required
 def emp_profile(request, pk):
     emp = get_object_or_404(Employee, pk=pk)
     #emp = Employee.objects.filter(pk=pk).first()
@@ -92,7 +114,7 @@ def login_request(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"You are now logged in as {username}.")
-                return redirect("employee_list")
+                return redirect("landing_page")
             else:
                 messages.error(request,"Invalid username or password.")
         else:
@@ -106,7 +128,7 @@ def logout_request(request):
     logout(request)
     return redirect('login_request')
 
-
+@login_required
 def leave_request(request):
     if request.method == "POST":
             form = Leave_Request_Form(request.POST)
@@ -126,6 +148,7 @@ def leave_request(request):
         form = Leave_Request_Form()
     return render(request, 'employee/leave_request.html', {'form': form})
 
+@login_required
 def leave_list(request):
     leave_requests =  Leave_Request.objects.all()
     return render(request,'employee/leave_list.html',{'leave_requests':leave_requests})

@@ -17,3 +17,9 @@ class Leave_Request_Form(forms.ModelForm):
         widgets = {'start_date': DateInput(), 'end_date': DateInput()}
         model = Leave_Request
         fields = ('start_date', 'end_date')
+        
+class Update_Profile_Form(forms.ModelForm):
+    
+    class Meta:
+        model = Employee
+        fields =('image', 'description')
