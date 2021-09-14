@@ -5,7 +5,7 @@
 
 <div class="d-flex">
     <div>
-        <img src={{ emp.image.url }} alt="" class="rounded-circle account-img">
+        <img src={{ emp.profile.image.url }} alt="" class="rounded-circle account-img">
     </div>
     <div>
         <h2>{{ emp.fName }} {{ emp.lName }}</h2>
@@ -26,7 +26,7 @@
 </aside>
 {% endif %}
 
-{% if user.is_superuser or user.username == emp.username %}
+{% if user.is_superuser or emp == user.employee %}
 <a class="btn btn-default" href="{% url 'profile_edit' pk=emp.empID %} " data-toggle="tooltip" title="Edit Profile">
     Edit Profile
 </a>
@@ -41,7 +41,7 @@
 
 
 <!-- Only display if admin or user -->
-{% if user.is_superuser or user.username == emp.username %}
+{% if user.is_superuser or emp == user.employee %}
 <h4 class="emp_info">Username: {{ emp.username }}</h4>
 <h4 class="emp_info">Salary: ${{ emp.salary }}</h4>
 <h4 class="emp_info">Employee ID: {{ emp.empID }}</h4>
@@ -55,9 +55,9 @@
 <br>
 <br>
 
-{% if not emp.description == None %}
+{% if not emp.profile.description == "" %}
 <h4 class="emp_info">About Me...</h4>
-<pre class="description">{{ emp.description }}</pre>
+<pre class="description">{{ emp.profile.description }}</pre>
 {% endif %}
 
 

@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
 from django.db.models.fields import CharField, EmailField, NullBooleanField
+from django.db.models.fields.related import ForeignKey, OneToOneField
 from django.http import request
 from employee.utils import create_new_ref_number, generateTempPassword
 from django.contrib.auth.models import User
@@ -27,33 +28,37 @@ class Employee(models.Model):
     deptID = models.ForeignKey( Department, on_delete=models.CASCADE, null=True, blank=True, verbose_name="department")
     user = models.OneToOneField(User, on_delete=CASCADE, null=True, blank=True, unique=True)
     username = models.CharField("username",max_length=50, null=True, blank=True) 
-    description = models.TextField(max_length=255, null=True, blank=True)
-    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    # description = models.TextField(max_length=255, null=True, blank=True)
+    # image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     
     
     def save(self, *args, **kwargs):
-        #Create new user
-        #Check if user exists
-        if not User.objects.filter(username=self.username).exists():
-            self.username = self.fName + self.lName +self.empID[4:]
-            #Uncomment for prod
-            #self.email = self.fName+'.'+self.lName+''+self.empID[4:]+'@gmail.com'
-            self.email = 'andrew.benson.testmail+'+self.fName+''+self.lName+'@gmail.com'
-            User.objects.create_user(username=self.username,email=self.email, password=generateTempPassword())
-            #Set the user
-            self.user = User.objects.get(username=self.username)
-        
+        self.username = self.fName + self.lName +self.empID[4:]
+        self.email = 'andrew.benson.testmail+'+self.fName+''+self.lName+'@gmail.com'
         super(Employee, self).save(*args,**kwargs)
-        img = Image.open(self.image.path)
-        
-        if img.height >300 or img.width >300:
-            output_size = (300,300)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
     
     def __str__(self):
         return f"{self.fName} {self.lName}"
     
+
+class Profile(models.Model):
+    employee = OneToOneField(Employee, on_delete=CASCADE)
+    description = models.TextField(max_length=255, null=True, blank=True)
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+
+    def save(self, *args, **kwargs):
+
+        super(Profile, self).save(*args,**kwargs)
+        
+        #Resize profile picture if too big
+        img = Image.open(self.image.path)
+        if img.height >300 or img.width >300:
+            output_size = (300,300)
+            img.thumbnail(output_size)
+            img.save(self.image.path)
+
+    def __str__(self):
+        return f"{self.employee}"
 
 
 class Leave_Request(models.Model):
@@ -67,8 +72,6 @@ class Leave_Request(models.Model):
     start_date =  models.DateField("Start Date",auto_now_add=False, null=True )
     end_date =  models.DateField("End Date",auto_now_add=False, null=True)
     status = models.CharField("Status", max_length=25, choices=STATUS_CHOICES, default='Pending') 
-    
-    
     
     def __str__(self):
         return f"{self.employee} {self.status}"

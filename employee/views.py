@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Employee, Leave_Request
+from .models import Employee, Leave_Request, Profile
 from django.contrib.auth.models import User 
 from .forms import EmpForm, Leave_Request_Form, Update_Profile_Form
 from django.contrib.auth.forms import AuthenticationForm 
@@ -49,16 +49,16 @@ def emp_edit(request, pk):
 @login_required
 def profile_edit(request, pk):
     emp = get_object_or_404(Employee, pk=pk)
-    
+    profile = get_object_or_404(Profile,employee=emp)
     if request.method == "POST":
-        form = Update_Profile_Form(request.POST, request.FILES, instance=emp)
+        form = Update_Profile_Form(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             emp = form.save(commit=False)
             emp.save()
             messages.success(request, 'Your profile has been updated')
             return redirect('emp_profile', pk)
     else:
-        form = Update_Profile_Form(instance=emp)
+        form = Update_Profile_Form(instance=profile)
     return render(request, 'employee/profile_edit.html', {'form': form, 'emp':emp})
 
 

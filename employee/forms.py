@@ -1,5 +1,5 @@
 from django import forms
-from .models import Employee, Leave_Request
+from .models import Employee, Leave_Request, Profile
 
 class EmpForm(forms.ModelForm):
     
@@ -21,5 +21,5 @@ class Leave_Request_Form(forms.ModelForm):
 class Update_Profile_Form(forms.ModelForm):
     
     class Meta:
-        model = Employee
+        model = Profile
         fields =('image', 'description')

@@ -10,7 +10,7 @@
 <h4 class="emp_info">Status: {{ leave_request.status }}</h4>
 
 
-{% if leave_request.employee.manager.username == user.username or user.is_superuser %}
+{% if leave_request.employee.manager == user.employee or user.is_superuser %}
 
 <a class="btn btn-default" href="{% url 'leave_approve' pk=leave_request.pk %}" data-toggle="tooltip"
     title="Approve Time Off">
