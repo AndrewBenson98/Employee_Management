@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Employee, Leave_Request, Profile
 from django.contrib.auth.models import User 
@@ -6,6 +7,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout 
 from django.contrib.auth.decorators import login_required
+from employee.utils import send_email
+#from django.contrib.sites.models import Site
 
 # Create your views here.
 
@@ -139,9 +142,12 @@ def leave_request(request):
                 leave_request.status = 'Pending'
                 leave_request.save()
                 
-                
-                #TO DO: Make a screen to approve or decline time off :DONE
-                #Send email tom employee's manager with link to the approval screen
+                #Send email to manager with leave request
+                subject =f"{emp.fName} {emp.lName} Is Requesting Time Off (Request#{leave_request.pk}"
+                message = f"{emp.fName} {emp.lName} has requested time off for {leave_request.start_date} to {leave_request.end_date}. Go to this link to approve or reject \n" +str(request.get_host())+"/leave/detail/"+str(leave_request.pk)
+                manager= emp.manager
+                send_email(subject,message, [manager.email])
+                messages.info(request, f"Request has been sent to {manager.fName} {manager.lName}.")
                 
                 return redirect('leave_list')
     else:
@@ -162,6 +168,15 @@ def leave_approve(request, pk):
     leave_request = get_object_or_404(Leave_Request, pk=pk)
     leave_request.status = 'Approved'
     leave_request.save()
+    
+    emp = leave_request.employee
+    
+    subject =f"Time off has been Approved (Request#{leave_request.pk})"
+    message = f"Time off for {leave_request.start_date} to {leave_request.end_date} has been Approved \nClick here to view leave request: \n" +str(request.get_host())+"/leave/detail/"+str(leave_request.pk)
+    
+    send_email(subject,message, [emp.email])
+    
+    
     messages.success(request, "Time off has been Approved")
     return redirect('leave_detail', pk=pk)
 
@@ -170,5 +185,13 @@ def leave_reject(request, pk):
     leave_request = get_object_or_404(Leave_Request, pk=pk)
     leave_request.status = 'Rejected'
     leave_request.save()
+    
+    emp = leave_request.employee
+    
+    subject =f"Time off has been Rejected (Request#{leave_request.pk})"
+    message = f"Time off for {leave_request.start_date} to {leave_request.end_date} has been Rejected \nClick here to view leave request: \n" +str(request.get_host())+"/leave/detail/"+str(leave_request.pk)
+    
+    send_email(subject,message, [emp.email])
+    
     messages.success(request, "Time off has been Rejected")
     return redirect('leave_detail', pk=pk)

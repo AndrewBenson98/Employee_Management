@@ -13,6 +13,11 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 from django.contrib.messages import constants as messages
+import environ
+
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env()
 
 MESSAGE_TAGS = {
         messages.DEBUG: 'alert-secondary',
@@ -30,7 +35,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^75pz7ncw_#s3cg4!955zwlz@0q(2@qwinor@&(g+31f9%$3r$'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -142,3 +147,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_URL ='login_request'
+
+#EMAIL SETTINGS
+
+#EMAIL_HOST = "localhost"
+EMAIL_HOST = "smtp.gmail.com"
+#EMAIL_PORT = "1025"
+EMAIL_PORT = "587"
+EMAIL_HOST_USER= env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+#EMAIL_USER_TLS = "False"
+EMAIL_USE_TLS = "True"
+#EMAIL_USER_SSL = "False"
+DEFAULT_FROM_EMAIL = "andrew.benson.testmail+admin@gmail.com"
