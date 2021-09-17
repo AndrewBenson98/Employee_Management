@@ -24,4 +24,13 @@
 
 {% endif %}
 
+
+
+{% if leave_request.employee == user.employee or user.is_superuser %}
+<a class="btn btn-default" href="{% url 'leave_delete' pk=leave_request.pk %}" data-toggle="tooltip"
+    title="Delete Leave Request">
+    Delete
+</a>
+{% endif %}
+
 {% endblock %}

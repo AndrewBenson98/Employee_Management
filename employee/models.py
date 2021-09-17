@@ -28,8 +28,7 @@ class Employee(models.Model):
     deptID = models.ForeignKey( Department, on_delete=models.CASCADE, null=True, blank=True, verbose_name="department")
     user = models.OneToOneField(User, on_delete=CASCADE, null=True, blank=True, unique=True)
     username = models.CharField("username",max_length=50, null=True, blank=True) 
-    # description = models.TextField(max_length=255, null=True, blank=True)
-    # image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+
     
     
     def save(self, *args, **kwargs):

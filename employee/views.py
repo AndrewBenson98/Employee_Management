@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout 
 from django.contrib.auth.decorators import login_required
 from employee.utils import send_email
+from django.http import HttpResponseForbidden
 #from django.contrib.sites.models import Site
 
 # Create your views here.
@@ -83,23 +84,26 @@ def emp_profile(request, pk):
 
 
 def emp_remove(request,pk):
-    emp = get_object_or_404(Employee, pk=pk)
     
-    # TO DO: Delete user also
-    try:
-        u = User.objects.get(username=emp.username)
-        u.delete()
-        emp.delete()
-        return redirect('employee_list')
-    #messages.success(request, "The user is deleted")            
+    if not request.user.is_superuser:
+        return HttpResponseForbidden()
+    else:
+        emp = get_object_or_404(Employee, pk=pk)
+        # TO DO: Delete user also
+        try:
+            u = User.objects.get(username=emp.username)
+            u.delete()
+            emp.delete()
+            return redirect('employee_list')
+        #messages.success(request, "The user is deleted")            
 
-    # except User.DoesNotExist:
-    #     messages.error(request, "User does not exist")    
-    #     #return redirect('employeeList')
+        # except User.DoesNotExist:
+        #     messages.error(request, "User does not exist")    
+        #     #return redirect('employeeList')
 
-    except Exception as e: 
-        messages.error(request, "There is an exception")
-        return redirect('employee_list')
+        except Exception as e: 
+            messages.error(request, "There is an exception")
+            return redirect('employee_list')
     
     
     
@@ -195,3 +199,12 @@ def leave_reject(request, pk):
     
     messages.success(request, "Time off has been Rejected")
     return redirect('leave_detail', pk=pk)
+
+
+def leave_delete(request,pk):
+    leave_request = get_object_or_404(Leave_Request, pk=pk)
+    if leave_request.employee != request.user.employee:
+        return HttpResponseForbidden()
+    
+    leave_request.delete()
+    return redirect('leave_list')
