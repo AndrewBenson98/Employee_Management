@@ -33,7 +33,8 @@ class Employee(models.Model):
     
     def save(self, *args, **kwargs):
         self.username = self.fName + self.lName +self.empID[4:]
-        self.email = 'andrew.benson.testmail+'+self.fName+''+self.lName+'@gmail.com'
+        #self.email = 'andrew.benson.testmail+'+self.fName+''+self.lName+'@gmail.com'
+        self.email = self.fName+''+self.lName+'@company.com'
         super(Employee, self).save(*args,**kwargs)
     
     def __str__(self):
