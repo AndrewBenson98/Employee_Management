@@ -42,7 +42,7 @@ class Employee(models.Model):
 
 class Profile(models.Model):
     employee = OneToOneField(Employee, on_delete=CASCADE)
-    description = models.TextField(max_length=255, null=True, blank=True)
+    description = models.TextField(max_length=255, null=True, blank=True, default="This employee management system is great!")
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
     def save(self, *args, **kwargs):

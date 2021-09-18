@@ -79,8 +79,10 @@ def user_profile(request):
 @login_required
 def emp_profile(request, pk):
     emp = get_object_or_404(Employee, pk=pk)
+    leave_requests = Leave_Request.objects.filter(employee=emp)
+    employees = Employee.objects.filter(manager=emp)
     #emp = Employee.objects.filter(pk=pk).first()
-    return render(request, 'employee/emp_profile.html', {'emp':emp})
+    return render(request, 'employee/emp_profile.html', {'emp':emp, 'leave_requests':leave_requests, 'employees':employees})
 
 
 def emp_remove(request,pk):
