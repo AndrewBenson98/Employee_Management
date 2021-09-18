@@ -1,0 +1,36 @@
+{% extends 'employee/base.html' %}
+
+{% block content %}
+<h1>Company Employee Management System</h1>
+<h1>Author: Andrew Benson</h1>
+<pre>This is my first Django project.
+The Employee Management Web Application allows users to keep track of employee details and their time off.
+Only super users are able to add new employees.
+
+Employee Overview:
+This screen displays a table of the current employees and some of thier details.
+Clicking on their employee ID will take you to that employee's Profile.
+
+Vacation Schedule:
+Similarily to the Employee Overview, this allows users to see who is requesting time off and the status of their request. 
+Clicking the Request ID takes you do a page with details about the time off.
+Only the employee's manager is able to Allow or Reject time off.
+
+My Profile: 
+This page bring you to the profile of the currently logged in user.
+The user is able to update their descrition and add a photo for their profile picture.  
+They can also see any time off they may have requested and a list of employees the user is in charge of if they are a manager.
+The user is also able to click the 'Leave Request' link which will bring them to a form to request time off 
+
+Leave Request:
+This is the form employees use to request time off. 
+After entering the days they want and submitting, an email will be sent to their manager with a link to approve or reject the time off.
+After time off is Approved or Rejected, an email will be sent back to the employee as a notification.
+The table in Vacation Schedule will update the status accordingly
+
+
+Try Logging In With 
+Username: Guest
+Password: guestpassword123
+</pre>
+{% endblock %}

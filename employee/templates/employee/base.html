@@ -23,6 +23,7 @@
             Logout
         </a>
 
+
         <a class="header-link" href="{% url 'user_profile' %}">
             My Profile
         </a>
@@ -33,6 +34,9 @@
             Login
         </a>
         {% endif %}
+        <a class="header-link" href="{% url 'about' %}">
+            About
+        </a>
         <a class="header-link" href="{% url 'leave_list' %}">
             Vacation Schedule
         </a>
@@ -40,6 +44,8 @@
         <a class="header-link" href="{% url 'employee_list' %}">
             Employee Overview
         </a>
+
+
 
         <h1><a href="/">Company</a></h1>
         </div>

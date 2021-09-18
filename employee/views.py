@@ -23,6 +23,10 @@ def employee_list(request):
     return render(request,'employee/employee_list.html',{'employees':employees})
     #return render(request,'employee/employee_list.html',{})
 
+def about(request):
+    return render(request, 'employee/about.html',{})
+
+
 @login_required
 def emp_new(request):
     if request.method == "POST":
