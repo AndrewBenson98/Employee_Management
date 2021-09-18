@@ -41,11 +41,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #django-insecure-^75pz7ncw_#s3cg4!955zwlz@0q(2@qwinor@&(g+31f9%$3r$
-SECRET_KEY = 'django-insecure-^75pz7ncw_#s3cg4!955zwlz@0q(2@qwinor@&(g+31f9%$3r$'
-#SECRET_KEY = os.environ.get('SECRET_KEY')
+#SECRET_KEY = 'django-insecure-^75pz7ncw_#s3cg4!955zwlz@0q(2@qwinor@&(g+31f9%$3r$'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG_VALUE')
+#DEBUG = True
 
 ALLOWED_HOSTS = ['arbenson-employee-management.herokuapp.com', '127.0.0.1']
 

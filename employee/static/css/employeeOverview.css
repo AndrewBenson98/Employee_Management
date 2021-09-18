@@ -84,3 +84,13 @@ h4 {
 
 
 }
+
+
+.landing-wrapper{
+    background-image: url("collab.jpg");
+    height: 50vh;
+    width: 100%;
+    text-align: center;
+    padding-top: 10%;
+
+}
