@@ -16,7 +16,7 @@ from django.http import HttpResponseForbidden
 def landing_page(request):
     return render(request,'employee/landing.html',{})
 
-@login_required
+
 def employee_list(request):
     
     employees =  Employee.objects.all()
@@ -76,7 +76,7 @@ def user_profile(request):
     return redirect('emp_profile', emp.empID)
     #return render(request,'employee/test.html',{})
 
-@login_required
+
 def emp_profile(request, pk):
     emp = get_object_or_404(Employee, pk=pk)
     leave_requests = Leave_Request.objects.filter(employee=emp)
@@ -160,7 +160,7 @@ def leave_request(request):
         form = Leave_Request_Form()
     return render(request, 'employee/leave_request.html', {'form': form})
 
-@login_required
+
 def leave_list(request):
     leave_requests =  Leave_Request.objects.all()
     return render(request,'employee/leave_list.html',{'leave_requests':leave_requests})
