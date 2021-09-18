@@ -16,7 +16,7 @@ class Department(models.Model):
         return self.deptName
 
 class Employee(models.Model):
-    id = models.BigIntegerField
+    
     empID = models.CharField("Employee ID",primary_key=True, max_length=8, default=create_new_ref_number)
     fName = models.CharField("first name",max_length=25, null=True, blank=True) 
     lName = models.CharField("last name",max_length=25, null=True, blank=True)
