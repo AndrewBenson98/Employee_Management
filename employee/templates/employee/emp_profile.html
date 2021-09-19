@@ -14,17 +14,22 @@
 </div>
 
 
-{% if user.is_superuser or emp == user.employee %}
+
 <aside class="actions">
+    {% if user.is_superuser or emp == user.employee %}
     <a class="btn btn-default" href="{% url 'emp_edit' pk=emp.empID %}" data-toggle="tooltip" title="Edit Employee">
         {% include './icons/pencil-fill.svg' %}
     </a>
+    {% endif %}
+    {% if user.is_superuser %}
     <a class="btn btn-default" href="{% url 'emp_remove' pk=emp.empID %} " data-toggle="tooltip"
         title="Delete Employee">
-        {% include './icons/x.svg' %}
-    </a>
+        {% include './icons/x.svg' %}</a>
+    {% endif %}
 </aside>
 {% endif %}
+
+
 
 {% if user.is_superuser or emp == user.employee %}
 <a class="btn btn-default" href="{% url 'profile_edit' pk=emp.empID %} " data-toggle="tooltip" title="Edit Profile">
