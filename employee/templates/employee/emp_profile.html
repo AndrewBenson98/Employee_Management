@@ -14,7 +14,7 @@
 </div>
 
 
-{% if user.is_superuser %}
+{% if user.is_superuser or emp == user.employee %}
 <aside class="actions">
     <a class="btn btn-default" href="{% url 'emp_edit' pk=emp.empID %}" data-toggle="tooltip" title="Edit Employee">
         {% include './icons/pencil-fill.svg' %}

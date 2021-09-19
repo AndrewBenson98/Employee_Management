@@ -11,7 +11,7 @@
     </div>
 
     <div class="page_icons">
-        {% if user.is_superuser or request.user|has_group:"admin-guest" %}
+        {% if user.is_authenticated %}
         <aside class="actions">
 
             <a href="{% url 'emp_new' %}" class="top-menu " data-toggle="tooltip" title="Add new employee">
